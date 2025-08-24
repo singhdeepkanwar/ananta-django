@@ -10,16 +10,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- CORE SETTINGS ---
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-# In Vercel, DEBUG is False by default.
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-# --- The correct WSGI path for your project structure ---
 WSGI_APPLICATION = 'ananta_project.wsgi.application'
 
 ALLOWED_HOSTS = []
 SITE_URL = os.environ.get('SITE_URL')
 if SITE_URL:
     ALLOWED_HOSTS.append(SITE_URL)
+if DEBUG:
+    ALLOWED_HOSTS.append('127.0.0.1')
 
 
 # --- APPLICATION DEFINITION ---
@@ -29,15 +29,15 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles', # This is essential
+    'django.contrib.staticfiles',
     'website',
     'ckeditor',
     'ckeditor_uploader',
 ]
 
+# --- MIDDLEWARE (No Whitenoise) ---
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # Whitenoise is NOT needed with this setup
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -65,7 +65,6 @@ TEMPLATES = [
 
 # --- DATABASE CONFIGURATION ---
 DATABASES = {
-    # Default to SQLite for local development if DATABASE_URL is not set
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
@@ -89,10 +88,10 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# --- STATIC & MEDIA FILES (Configured for Vercel) ---
+# --- STATIC & MEDIA FILES ---
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static') # Vercel uses this dir
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
