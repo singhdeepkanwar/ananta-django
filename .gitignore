@@ -13,3 +13,5 @@ __pycache__/
 
 # Build artifacts
 staticfiles_build/
+
+.env
