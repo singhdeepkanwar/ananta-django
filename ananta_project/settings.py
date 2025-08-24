@@ -25,7 +25,12 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') == 'True'
 
-ALLOWED_HOSTS = []
+if DEBUG:
+    ALLOWED_HOSTS = ['*']  # Allow all hosts in development
+    WSGI_APPLICATION = 'ananta_project.wsgi.application'
+else:
+    ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
+    WSGI_APPLICATION = 'api.wsgi.app'
 # Add this logic to allow your Vercel URL
 VERCEL_URL = os.environ.get('VERCEL_URL')
 if VERCEL_URL:
@@ -72,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ananta_project.wsgi.application'
+
 
 
 # Database
