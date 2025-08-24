@@ -37,7 +37,9 @@ if VERCEL_URL:
     ALLOWED_HOSTS.append(f'.{VERCEL_URL}')
 if DEBUG:
     ALLOWED_HOSTS.append('127.0.0.1')
-
+SITE_URL = os.environ.get('SITE_URL')
+if SITE_URL:
+    ALLOWED_HOSTS.append(SITE_URL)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
