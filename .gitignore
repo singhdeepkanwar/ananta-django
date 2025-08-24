@@ -1,0 +1,15 @@
+# Virtual Environment
+venv/
+
+# SQLite Database
+db.sqlite3
+
+# Media files (user uploads) - these should be stored on a cloud service like S3 in real production
+media/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Build artifacts
+staticfiles_build/
