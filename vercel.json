@@ -7,7 +7,11 @@
       "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
     },
     {
-      "src": "static/**",
+      "src": "static",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "staticfiles_build/static",
       "use": "@vercel/static"
     }
   ],
