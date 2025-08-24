@@ -32,6 +32,11 @@ WSGI_APPLICATION = 'api.wsgi.app'
 VERCEL_URL = os.environ.get('VERCEL_URL')
 if VERCEL_URL:
     ALLOWED_HOSTS.append(VERCEL_URL)
+    # The leading dot acts as a wildcard to allow all subdomains
+    # e.g., project-name-git-main-team.vercel.app
+    ALLOWED_HOSTS.append(f'.{VERCEL_URL}')
+if DEBUG:
+    ALLOWED_HOSTS.append('127.0.0.1')
 
 
 INSTALLED_APPS = [
