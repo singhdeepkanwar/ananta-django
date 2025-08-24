@@ -9,10 +9,11 @@ echo "Building project..."
 pip install -r requirements.txt
 
 # Collect static files
+# This command finds ALL static files (yours and the admin's)
+# and copies them to the STATIC_ROOT directory ('staticfiles_build/static').
 python manage.py collectstatic --noinput
 
-# Apply database migrations (if using a persistent database)
-# For Vercel's ephemeral filesystem with SQLite, this runs on each deploy.
+# Apply database migrations
 python manage.py migrate
 
 echo "Build finished."
