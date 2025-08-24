@@ -1,20 +1,18 @@
 {
-  "version": 2,
   "builds": [
     {
-      "src": "ananta_project/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+      "src": "api/index.py",
+      "use": "@vercel/python"
     },
     {
-      "src": "staticfiles",
+      "src": "staticfiles_build/static",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/staticfiles/$1"
+      "dest": "/staticfiles_build/static/$1"
     },
     {
       "src": "/media/(.*)",
@@ -22,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "ananta_project/wsgi.py"
+      "dest": "api/index.py"
     }
   ]
 }
