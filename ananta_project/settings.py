@@ -32,10 +32,7 @@ WSGI_APPLICATION = 'api.wsgi.app'
 VERCEL_URL = os.environ.get('VERCEL_URL')
 if VERCEL_URL:
     ALLOWED_HOSTS.append(VERCEL_URL)
-SITE_URL = os.environ.get('SITE_URL')
-if SITE_URL:
-    ALLOWED_HOSTS.append(SITE_URL)
-# Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
