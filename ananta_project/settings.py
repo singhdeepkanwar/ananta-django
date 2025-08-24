@@ -30,7 +30,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') == 'True'
 
 
 ALLOWED_HOSTS = []
-WSGI_APPLICATION = 'api.wsgi.app'
+WSGI_APPLICATION = 'ananta_project.wsgi.app'
 # Add this logic to allow your Vercel URL
 VERCEL_URL = os.environ.get('VERCEL_URL')
 if VERCEL_URL:
