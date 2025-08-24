@@ -1,0 +1,47 @@
+<!-- templates/services.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block title %}Our Services - Ananta Group{% endblock %}
+
+{% block content %}
+<!-- Page Header Section -->
+<section class="page-header">
+    <div class="container">
+        <h1>Our Spectrum of AI Expertise</h1>
+        <p>End-to-end solutions designed to integrate intelligence into the core of your business operations and strategy.</p>
+    </div>
+</section>
+
+<!-- Detailed Services Section -->
+<section id="service-details">
+    <div class="container">
+        <div class="service-detail-grid">
+    {% for service in services %}
+    <div class="service-detail-item fade-in-section">
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.description }}</p>
+        
+        {% if service.key_benefits %}
+        <ul class="about-list">
+            {% for benefit in service.key_benefits|splitlines %}
+            <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>{{ benefit }}</span></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta bg-white">
+    <div class="container section-header">
+        <h2>Ready to Unlock Your Potential?</h2>
+        <p>Let's have a conversation about your goals and how Ananta Group can help you achieve them with the power of AI.</p>
+        <a href="#" class="btn btn-primary">Schedule a Consultation</a> <!-- We will fix this link later -->
+    </div>
+</section>
+{% endblock %}

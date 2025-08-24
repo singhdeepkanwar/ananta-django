@@ -1,0 +1,56 @@
+<!-- templates/about.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - Ananta Group{% endblock %}
+
+{% block content %}
+<!-- Page Header Section -->
+<section class="page-header">
+    <div class="container">
+        <h1>Your Partner in Digital Transformation</h1>
+        <p>We are a collective of strategists, data scientists, and engineers dedicated to building custom, ethical, and scalable AI solutions.</p>
+    </div>
+</section>
+
+<!-- Our Story Section -->
+<section id="story" class="bg-white">
+    <div class="container">
+         <div class="about-grid">
+            <div class="about-content">
+                <span class="tag">Our Mission</span>
+                <h2>Bridging the Gap Between AI Potential and Business Reality</h2>
+                <p>Ananta Group was founded on a simple but powerful observation: the transformative potential of AI was being constrained by generic solutions. Our mission is to empower enterprises with bespoke and impactful artificial intelligence that drives real progress and unlocks new frontiers of innovation.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2400&auto=format&fit=crop" alt="Team discussing strategy">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Leadership Section -->
+<section id="leadership" class="fade-in-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Meet the Leadership</h2>
+            <p>Our team’s expertise is the cornerstone of our success.</p>
+        </div>
+       <div class="team-grid">
+    {% for member in team_members %}
+    <div class="team-card">
+        {% if member.headshot %}
+        <img src="{{ member.headshot.url }}" alt="Headshot of {{ member.name }}">
+        {% endif %}
+        <h3>{{ member.name }}</h3>
+        <p class="title">{{ member.title }}</p>
+        <p class="bio">{{ member.bio }}</p>
+    </div>
+    {% endfor %}
+</div>
+    </div>
+</section>
+{% endblock %}
+
+

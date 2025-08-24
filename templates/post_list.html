@@ -1,0 +1,34 @@
+<!-- templates/post_list.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Insights - Ananta Group{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Insights & Articles</h1>
+        <p>Explore our latest research, industry analysis, and thoughts on the future of AI.</p>
+    </div>
+</section>
+
+<section class="bg-white">
+    <div class="container">
+        <div class="case-study-grid"> <!-- We can reuse the case study grid style -->
+            {% for post in posts %}
+            <a href="{% url 'post_detail' slug=post.slug %}" class="post-card-link">
+                <div class="case-study-card">
+                    {% if post.featured_image %}
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="case-study-content">
+                        <h4>{{ post.title }}</h4>
+                        <p class="post-meta">By {{ post.author }} on {{ post.publish_date|date:"F d, Y" }}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

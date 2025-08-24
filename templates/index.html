@@ -1,0 +1,137 @@
+<!-- templates/index.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Section 1: Hero -->
+<section id="hero">
+    <div class="container">
+        <h1>AI Solutions to Propel Your Business Forward</h1>
+        <p>We design and implement cutting-edge AI strategies that deliver real-world results, driving efficiency and unlocking new opportunities for growth.</p>
+        <div class="hero-buttons">
+            <a href="#services" class="btn btn-primary">Explore Our Services</a>
+            <a href="#contact" class="btn btn-secondary">Contact Sales</a>
+        </div>
+    </div>
+</section>
+
+<!-- Trusted By Section -->
+<section class="trusted-by">
+    <div class="container">
+        <p>Trusted by innovative companies worldwide</p>
+        <div class="logos-grid">
+            <img src="https://placehold.co/150x50/F8F9FA/5E6C84?text=InnovateCo" alt="Client Logo 1">
+            <img src="https://placehold.co/150x50/F8F9FA/5E6C84?text=FutureCorp" alt="Client Logo 2">
+            <img src="https://placehold.co/150x50/F8F9FA/5E6C84?text=QuantumLeap" alt="Client Logo 3">
+            <img src="https://placehold.co/150x50/F8F9FA/5E6C84?text=ApexGlobal" alt="Client Logo 4">
+            <img src="https://placehold.co/150x50/F8F9FA/5E6C84?text=Synergy" alt="Client Logo 5">
+            <img src="https://placehold.co/150x50/F8F9FA/5E6C84?text=NextGen" alt="Client Logo 6">
+        </div>
+    </div>
+</section>
+
+<!-- Section 2: Services -->
+<section id="services" class="fade-in-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Core Services</h2>
+            <p>We offer a comprehensive suite of AI services tailored to your needs.</p>
+        </div>
+        <!-- templates/index.html -->
+
+            <div class="services-grid">
+                {% for service in services %}
+                <div class="service-card">
+                    <div class="service-card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="{{ service.icon_svg_path }}" />
+                    </svg>
+                    </div>
+                    <h3>{{ service.title }}</h3>
+                    <p>{{ service.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+    </div>
+</section>
+
+<!-- Section 3: About Us / Advantage -->
+<section id="about" class="bg-white fade-in-section">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-content">
+                <span class="tag">The Ananta Advantage</span>
+                <h2>Your Partner in Digital Transformation</h2>
+                <p>We are more than just consultants; we are your dedicated partners. Our mission is to demystify artificial intelligence and make it an accessible, powerful tool for every business.</p>
+                <ul class="about-list">
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span>Business-focused, results-driven solutions.</span>
+                    </li>
+                     <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span>A world-class team of data scientists and engineers.</span>
+                    </li>
+                     <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span>Transparent collaboration and partnership.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2400&auto.format&fit=crop" alt="Professional team collaborating">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 4: Testimonials -->
+<!-- templates/index.html -->
+
+<!-- Section 4: Testimonials -->
+<section id="testimonials" class="fade-in-section">
+     <div class="container">
+        <div class="section-header">
+            <h2>What Our Clients Say</h2>
+            <p>We're proud to have earned the trust of our partners.h</p>
+        </div>
+
+        {% if testimonials %}
+        <!-- Swiper Carousel Container -->
+        <div class="swiper testimonial-swiper">
+            <div class="swiper-wrapper">
+                
+                <!-- Loop through all featured testimonials -->
+                {% for testimonial in testimonials %}
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <p class="quote">"{{ testimonial.quote }}"</p>
+                        <div class="testimonial-author">
+                            {% if testimonial.author_image %}
+                            <img src="{{ testimonial.author_image.url }}" alt="Photo of {{ testimonial.author_name }}">
+                            {% endif %}
+                            <p class="name">{{ testimonial.author_name }}</p>
+                            <p class="title">{{ testimonial.author_title }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Section 5: Final CTA -->
+<section id="contact" class="bg-white">
+    <div class="container section-header">
+        <h2>Ready to Unlock Your Potential?</h2>
+        <p>Let's have a conversation about your goals and how Ananta Group can help you achieve them with the power of AI.</p>
+        <a href="#" class="btn btn-primary">Schedule a Consultation</a> <!-- Placeholder for now -->
+    </div>
+</section>
+{% endblock %}

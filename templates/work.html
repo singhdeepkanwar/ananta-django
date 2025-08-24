@@ -1,0 +1,51 @@
+<!-- templates/work.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Work - Ananta Group{% endblock %}
+{% load custom_filters %}
+{% block content %}
+<!-- Page Header Section -->
+<section class="page-header">
+    <div class="container">
+        <h1>Impact in Action</h1>
+        <p>Explore how we've helped industry leaders achieve tangible results with bespoke AI.</p>
+    </div>
+</section>
+
+<!-- Case Studies Grid -->
+<section id="case-studies" class="bg-white">
+    <div class="container">
+        <div class="case-study-grid">
+
+            <!-- This is the Django 'for' loop -->
+            {% for study in case_studies %}
+            <div class="case-study-card fade-in-section">
+                
+                <!-- Use the image from the database. Check if it exists first. -->
+                {% if study.image %}
+                <img src="{{ study.image.url }}" alt="Case study for {{ study.title }}">
+                {% endif %}
+                
+                <div class="case-study-content">
+                    <span class="tag">{{ study.tag }}</span>
+                    <h4>{{ study.title }}</h4>
+                    <p><strong>Challenge:</strong> {{ study.challenge }}</p>
+                    <p><strong>Solution:</strong> {{ study.solution }}</p>
+                    <div class="results">
+                        <p><strong>Results:</strong></p>
+                        <ul>
+                            {% for result_line in study.results|splitlines %}
+                                <li>{{ result_line }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,21 @@
+<!-- templates/post_detail.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} - Ananta Group{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>{{ post.title }}</h1>
+        <p>By {{ post.author }} on {{ post.publish_date|date:"F d, Y" }}</p>
+    </div>
+</section>
+
+<section class="bg-white">
+    <div class="container article-container">
+        <!-- The 'safe' filter tells Django to render the HTML from the rich text editor -->
+        {{ post.body|safe }}
+    </div>
+</section>
+{% endblock %}
