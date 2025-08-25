@@ -124,7 +124,7 @@ AWS_S3_ENDPOINT_URL = os.environ.get('SUPABASE_S3_ENDPOINT_URL')
 AWS_S3_REGION_NAME = os.environ.get('SUPABASE_S3_REGION_NAME')
 AWS_S3_FILE_OVERWRITE = False # Set to True if you want to overwrite files with the same name
 AWS_DEFAULT_ACL = None # By default, files are private. Set to 'public-read' for public files.
-AWS_LOCATION = 'media' # Optional: A sub-directory in your bucket to store media files.
+AWS_LOCATION = '' # Optional: A sub-directory in your bucket to store media files.
 
 # If you want to serve the files directly from Supabase
 # MEDIA_URL = f"{os.environ.get('SUPABASE_URL')}/storage/v1/object/public/{os.environ.get('SUPABASE_BUCKET_NAME')}/" # For public buckets
