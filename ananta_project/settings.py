@@ -90,35 +90,30 @@ USE_TZ = True
 
 # --- STATIC & MEDIA FILES (Configured for Vercel & Supabase Storage) ---
 
+# This variable will be 'True' only in Vercel's environment
+IS_PRODUCTION = os.environ.get('VERCEL') == '1'
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
-# Check if we are in a production (Vercel) environment
-if 'DATABASE_URL' in os.environ:
-    # --- Supabase S3 Storage Settings ---
-    AWS_ACCESS_KEY_ID = 'c45eb8b42ad21277e9fc74a4efd51573' # Not a secret, but required. Get from Supabase URL.
+if IS_PRODUCTION:
+    # --- Production Media Storage (Supabase/S3) ---
+    AWS_ACCESS_KEY_ID = os.environ.get('SUPABASE_PROJECT_ID')
     AWS_SECRET_ACCESS_KEY = os.environ.get('SUPABASE_SERVICE_KEY')
-    AWS_STORAGE_BUCKET_NAME = 'AnantaStorage' # The name of the bucket you created
-    
-    # This is the custom endpoint for Supabase
+    AWS_STORAGE_BUCKET_NAME = 'AnantaStorage'
     AWS_S3_ENDPOINT_URL = os.environ.get('SUPABASE_S3_ENDPOINT_URL')
-    
-    AWS_S3_CUSTOM_DOMAIN = f'{os.environ.get("SUPABASE_PROJECT_ID")}.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}'
-    AWS_LOCATION = 'ap-southeast-2' # Setting this to an empty string is important
-    
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_ACCESS_KEY_ID}.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}'
+    AWS_LOCATION = 'ap-southeast-2'
     AWS_S3_FILE_OVERWRITE = False
     AWS_DEFAULT_ACL = 'public-read'
-
-    # --- Tell Django to use S3 for media file uploads ---
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    
+    # Use the custom storage class we created
+    DEFAULT_FILE_STORAGE = 'ananta_project.storages.MediaStorage'
 else:
-    # --- Local Development Settings ---
+    # --- Local Development Media Storage ---
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# --- This needs to be outside the 'if' block ---
-CKEDITOR_UPLOAD_PATH = "uploads/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
