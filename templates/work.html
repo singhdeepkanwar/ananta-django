@@ -25,7 +25,7 @@
                 
                 <!-- Use the image from the database. Check if it exists first. -->
                 {% if study.image %}
-                <img src="{{ study.image.url }}" alt="Case study for {{ study.title }}">
+                <img src="{{ study.image_url }}" alt="Case study for {{ study.title }}">
                 {% endif %}
                 
                 <div class="case-study-content">
