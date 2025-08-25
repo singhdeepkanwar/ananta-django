@@ -99,13 +99,13 @@ if 'DATABASE_URL' in os.environ:
     # --- Supabase S3 Storage Settings ---
     AWS_ACCESS_KEY_ID = 'c45eb8b42ad21277e9fc74a4efd51573' # Not a secret, but required. Get from Supabase URL.
     AWS_SECRET_ACCESS_KEY = os.environ.get('SUPABASE_SERVICE_KEY')
-    AWS_STORAGE_BUCKET_NAME = 'media' # The name of the bucket you created
+    AWS_STORAGE_BUCKET_NAME = 'AnantaStorage' # The name of the bucket you created
     
     # This is the custom endpoint for Supabase
     AWS_S3_ENDPOINT_URL = os.environ.get('SUPABASE_S3_ENDPOINT_URL')
     
     AWS_S3_CUSTOM_DOMAIN = f'{os.environ.get("SUPABASE_PROJECT_ID")}.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}'
-    AWS_LOCATION = '' # Setting this to an empty string is important
+    AWS_LOCATION = 'ap-southeast-2' # Setting this to an empty string is important
     
     AWS_S3_FILE_OVERWRITE = False
     AWS_DEFAULT_ACL = 'public-read'
