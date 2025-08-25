@@ -90,28 +90,25 @@ USE_TZ = True
 
 # --- STATIC & MEDIA FILES (Configured for Vercel & Supabase Storage) ---
 
-#IS_PRODUCTION = os.environ.get('VERCEL') == '1'
-IS_PRODUCTION = os.environ.get('SITE_URL') is not None
+IS_PRODUCTION = os.environ.get('VERCEL') == '1'
+
 
 
 # --- Static Files Configuration ---
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-# This is the single output directory where 'collectstatic' will place ALL static files.
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
-# --- Media Files Configuration ---
-# Use our custom Supabase storage class ONLY in production
 if IS_PRODUCTION:
     DEFAULT_FILE_STORAGE = 'ananta_project.storages.SupabaseMediaStorage'
 else:
-    # Use local storage for development
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# --- OTHER SETTINGS ---
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'noreply@anantagroup.com'
 
