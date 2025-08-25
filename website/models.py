@@ -3,7 +3,7 @@
 from django.db import models
 from django.utils import timezone
 from ckeditor.fields import RichTextField
-from .supabase_utils import upload_to_supabase
+
 
 class CaseStudy(models.Model):
     # e.g., "Logistics & Supply Chain"
@@ -12,29 +12,15 @@ class CaseStudy(models.Model):
     # e.g., "Optimized Fleet Routing for Global Shipper"
     title = models.CharField(max_length=200)
 
-    # This field will now store the public URL string
-    image_url = models.URLField(max_length=500, blank=True)
-    # This is a temporary, non-database field to handle the upload
-    image_upload = models.ImageField(upload_to='temp/', blank=True, null=True)
+    # An image file that you can upload from the admin panel
+    image = models.ImageField(upload_to='case_studies/')
+
     # Longer text fields for the main content
     challenge = models.TextField()
     solution = models.TextField()
     
     # We'll store the list of results as a single block of text
     results = models.TextField(help_text="List each result on a new line.")
-
-    def save(self, *args, **kwargs):
-        # Check if a new file has been uploaded to the temporary field
-        if self.image_upload:
-            # Upload the file to Supabase
-            public_url = upload_to_supabase(self.image_upload, 'case_studies')
-            if public_url:
-                # If upload is successful, store the public URL
-                self.image_url = public_url
-            # Clear the temporary upload field so it's not saved in the DB
-            self.image_upload = None
-        
-        super(CaseStudy, self).save(*args, **kwargs)
 
     # This is how the object will be named in the admin panel
     def __str__(self):
@@ -62,6 +48,7 @@ class TeamMember(models.Model):
 
     class Meta:
         ordering = ['order']
+
     def __str__(self):
         return self.name
 

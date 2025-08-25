@@ -114,3 +114,30 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
     'default': { 'toolbar': 'full', 'height': 300, 'width': '100%'},
 }
+
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = os.environ.get('SUPABASE_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('SUPABASE_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('SUPABASE_BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = os.environ.get('SUPABASE_S3_ENDPOINT_URL')
+AWS_S3_REGION_NAME = os.environ.get('SUPABASE_S3_REGION_NAME')
+AWS_S3_FILE_OVERWRITE = False # Set to True if you want to overwrite files with the same name
+AWS_DEFAULT_ACL = None # By default, files are private. Set to 'public-read' for public files.
+AWS_LOCATION = 'media' # Optional: A sub-directory in your bucket to store media files.
+
+# If you want to serve the files directly from Supabase
+# MEDIA_URL = f"{os.environ.get('SUPABASE_URL')}/storage/v1/object/public/{os.environ.get('SUPABASE_BUCKET_NAME')}/" # For public buckets
+MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/"
+
+# For Django 4.2 and newer, you can use the STORAGES setting
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
