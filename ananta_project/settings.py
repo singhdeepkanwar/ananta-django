@@ -90,33 +90,25 @@ USE_TZ = True
 
 # --- STATIC & MEDIA FILES (Configured for Vercel & Supabase Storage) ---
 
+-
+
+# This variable will be 'True' only in Vercel's environment
 IS_PRODUCTION = os.environ.get('VERCEL') == '1'
 
+# --- Static Files Configuration ---
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# This is the single output directory where 'collectstatic' will place ALL static files.
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
-# Define Media files settings globally
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Use the cloud storage backend ONLY in production
+# --- Media Files Configuration ---
+# Use our custom Supabase storage class ONLY in production
 if IS_PRODUCTION:
-    # Use the custom storage class we created in ananta_project/storages.py
-    DEFAULT_FILE_STORAGE = 'ananta_project.storages.MediaStorage'
-    
-    # Supabase/S3 credentials
-    AWS_ACCESS_KEY_ID = os.environ.get('SUPABASE_PROJECT_ID')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('SUPABASE_SERVICE_KEY')
-    AWS_STORAGE_BUCKET_NAME = 'AnantaStorage'
-    AWS_S3_ENDPOINT_URL = os.environ.get('SUPABASE_S3_ENDPOINT_URL')
-    
-    # These settings are important for generating correct public URLs
-    AWS_S3_CUSTOM_DOMAIN = f'{AWS_ACCESS_KEY_ID}.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}'
-    AWS_LOCATION = ''
-    AWS_QUERYSTRING_AUTH = False # Important for public files
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_DEFAULT_ACL = 'public-read'
+    DEFAULT_FILE_STORAGE = 'ananta_project.storages.SupabaseMediaStorage'
+else:
+    # Use local storage for development
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
