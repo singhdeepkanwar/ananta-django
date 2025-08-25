@@ -88,13 +88,37 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# --- STATIC & MEDIA FILES ---
+# --- STATIC & MEDIA FILES (Configured for Vercel & Supabase Storage) ---
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Check if we are in a production (Vercel) environment
+if 'DATABASE_URL' in os.environ:
+    # --- Supabase S3 Storage Settings ---
+    AWS_ACCESS_KEY_ID = 'c45eb8b42ad21277e9fc74a4efd51573' # Not a secret, but required. Get from Supabase URL.
+    AWS_SECRET_ACCESS_KEY = os.environ.get('SUPABASE_SERVICE_KEY')
+    AWS_STORAGE_BUCKET_NAME = 'media' # The name of the bucket you created
+    
+    # This is the custom endpoint for Supabase
+    AWS_S3_ENDPOINT_URL = os.environ.get('SUPABASE_S3_ENDPOINT_URL')
+    
+    AWS_S3_CUSTOM_DOMAIN = f'{os.environ.get("SUPABASE_PROJECT_ID")}.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}'
+    AWS_LOCATION = '' # Setting this to an empty string is important
+    
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_DEFAULT_ACL = 'public-read'
+
+    # --- Tell Django to use S3 for media file uploads ---
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+else:
+    # --- Local Development Settings ---
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# --- This needs to be outside the 'if' block ---
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
