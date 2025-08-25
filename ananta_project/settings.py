@@ -95,16 +95,14 @@ IS_PRODUCTION = os.environ.get('VERCEL') == '1'
 
 
 # --- Static Files Configuration ---
+# --- STATIC & MEDIA FILES ---
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
-if IS_PRODUCTION:
-    DEFAULT_FILE_STORAGE = 'ananta_project.storages.SupabaseMediaStorage'
-else:
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# These are now used for local development and as placeholders
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
