@@ -7,13 +7,13 @@ class SupabaseMediaStorage(S3Boto3Storage):
     # Get credentials directly from environment variables
     access_key = os.environ.get('SUPABASE_PROJECT_ID')
     secret_key = os.environ.get('SUPABASE_SERVICE_KEY')
-    bucket_name = 'media' # Your bucket name
+    bucket_name = 'AnantaStorage' # Your bucket name
     
     # Supabase requires a specific endpoint URL
     endpoint_url = os.environ.get('SUPABASE_S3_ENDPOINT_URL')
     
     # These are important settings for Supabase
-    location = '' # Save files at the root of the bucket
+    location = 'ap-southeast-2' # Save files at the root of the bucket
     file_overwrite = False
     default_acl = 'public-read'
     querystring_auth = False # Important for generating clean public URLs
