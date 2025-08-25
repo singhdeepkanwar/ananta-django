@@ -90,7 +90,7 @@ USE_TZ = True
 
 # --- STATIC & MEDIA FILES (Configured for Vercel & Supabase Storage) ---
 
--
+
 
 # This variable will be 'True' only in Vercel's environment
 IS_PRODUCTION = os.environ.get('VERCEL') == '1'
