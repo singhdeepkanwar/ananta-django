@@ -90,10 +90,9 @@ USE_TZ = True
 
 # --- STATIC & MEDIA FILES (Configured for Vercel & Supabase Storage) ---
 
+#IS_PRODUCTION = os.environ.get('VERCEL') == '1'
+IS_PRODUCTION = os.environ.get('SITE_URL') is not None
 
-
-# This variable will be 'True' only in Vercel's environment
-IS_PRODUCTION = os.environ.get('VERCEL') == '1'
 
 # --- Static Files Configuration ---
 STATIC_URL = '/static/'
