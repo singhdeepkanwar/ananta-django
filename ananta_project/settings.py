@@ -112,36 +112,35 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
     'default': { 'toolbar': 'full', 'height': 300, 'width': '100%'},
 }
-
-
-
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = os.environ.get('SUPABASE_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('SUPABASE_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('SUPABASE_BUCKET_NAME')
-AWS_S3_ENDPOINT_URL = os.environ.get('SUPABASE_S3_ENDPOINT_URL')
-AWS_S3_REGION_NAME = os.environ.get('SUPABASE_S3_REGION_NAME')
-AWS_S3_FILE_OVERWRITE = False # Set to True if you want to overwrite files with the same name
-AWS_DEFAULT_ACL = None # By default, files are private. Set to 'public-read' for public files.
-AWS_LOCATION = '' # Optional: A sub-directory in your bucket to store media files.
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-# If you want to serve the files directly from Supabase
-# MEDIA_URL = f"{os.environ.get('SUPABASE_URL')}/storage/v1/object/public/{os.environ.get('SUPABASE_BUCKET_NAME')}/" # For public buckets
-MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/"
+SUPABASE_ID = os.environ.get('SUPABASE_ACCESS_KEY_ID')
+SUPABASE_KEY = os.environ.get('SUPABASE_SECRET_ACCESS_KEY')
 
-# For Django 4.2 and newer, you can use the STORAGES setting
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
-}
-# Tell CKEditor to use the S3 storage backend
-CKEDITOR_STORAGE_BACKEND = 'storages.backends.s3boto3.S3Boto3Storage'
-CKEDITOR_UPLOAD_PATH = "uploads/"
-if not os.environ.get('VERCEL') == '1':
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+if SUPABASE_ID and SUPABASE_KEY:
+    AWS_ACCESS_KEY_ID = SUPABASE_ID
+    AWS_SECRET_ACCESS_KEY = SUPABASE_KEY
+    AWS_STORAGE_BUCKET_NAME = 'ananta-storage'
+    AWS_S3_ENDPOINT_URL = f"https://{SUPABASE_ID}.supabase.co/storage/v1"
+    AWS_S3_CUSTOM_DOMAIN = f"{SUPABASE_ID}.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}"
+    AWS_S3_REGION_NAME = 'us-east-1'
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
+    AWS_S3_OBJECT_PARAMETERS = { 'CacheControl': 'max-age=86400', }
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_LOCATION = ''
+    AWS_QUERYSTRING_AUTH = False
+
+    STORAGES = {
+        "default": { "BACKEND": "storages.backends.s3boto3.S3Boto3Storage" },
+        "staticfiles": { "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage" },
+    }
+else:
+    # Fallback to local storage if credentials are not found
+    MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# --- OTHER APP SETTINGS ---
+CKEDITOR_STORAGE_BACKEND = 'django.core.files.storage.get_storage_class'
+CKEDITOR_UPLOAD_PATH = "uploads/"
